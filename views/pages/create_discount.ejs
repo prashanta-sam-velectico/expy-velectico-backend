@@ -1,0 +1,345 @@
+<%- include('../admin/header'); %>
+
+<div class="header"> 
+    <h1 class="page-header">
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+    <li><a href="#">Dashboard</a></li>
+    <li class="active">Create Discount Code</li>
+</ol> 
+                
+</div>
+
+<div id="page-inner">
+	<div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                            <div class="card-action">
+                                Create Discount Code
+                            </div>
+                           
+                            
+                                    <div class="card-content">
+                                        
+                                         <div class="col">
+                                            <ul class="tabs">
+                                            <li class="tab"><a class="active" href="#tab_fixed">Fixed Amount Or Percentage</a></li>
+                                            <li class="tab"><a  href="#tab_quota" class="tab_quota" >Quota Of Number</a></li>                                            
+                                            <li class="tab"><a href="#tab_deadline" class="tab_deadline" >Specific Deadline</a></li>
+                                            <li class="tab"><a href="#tab_deadline_quota" class="tab_deadline_quota" >Deadline and Quota </a></li>
+                                           <div class="indicator" style="right: 158.469px; left: 79.5312px;"></div></ul>
+                                        </div>
+                                        <div class="clearBoth"><br></div>
+                                        <div id="tab_fixed" class="col s12" style="display: block;">
+                                            
+                                            <div class="card-content">
+                                                <form action="#">
+                                                    <p>
+                                                      <input name="group1" type="radio" id="rdo_amt" checked>
+                                                      <label for="rdo_amt">Amount</label>
+                                                   
+                                                      <input name="group1" type="radio" id="rdo_per">
+                                                      <label for="rdo_per">Percentage</label>
+                                                      <input type="hidden" name="DM_Code" id="DM_Code" value="<%=randomCode %>">
+                                                      <input type="hidden" name="DM_type" id="DM_type">
+                                                    </p>                                           
+                                                  </form>
+                                                <form class="col s12">
+                                                     <div class="row">                                                       
+                                                       <div class="input-field col s4">
+                                                         <!-- <i class="material-icons prefix">account_circle</i> -->
+                                                         <input id="icon_prefix" type="text" name="DM_Code" readonly  value="<%=randomCode %>">
+                                                         <!-- <label for="icon_prefix">Code</label> -->
+                                                       </div>
+                                                       <div class="input-field col s4">
+                                                         <!-- <i class="material-icons prefix">phone</i> -->
+                                                         <input id="DM_Amount_Percent" name="DM_Amount_Percent" type="number" value="0" min="0" class="validate">
+                                                         <label for="DM_Amount_Percent" id="lbl_amt_per"></label>
+                                                       </div>
+                                                       <div class="input-field col s4">
+                                                        <button class="waves-effect waves-light btn Create_Code_amt_per">Create</button>
+                                                      </div>
+                                                     </div>
+                                                
+                                                </form>
+                                            </div> 
+                                                
+                                                   
+                                               <div class="clearBoth"></div>
+                                        </div>
+                                            
+                                        </div>
+                                        <div id="tab_quota" class="col s12" style="display: none;">
+                                            <form class="col s12">
+                                                <div class="row">                                                      
+                                                		<div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">account_circle</i> -->
+                                                        <input  type="text" readonly  value="<%=randomCode %>">
+                                                        <!-- <label for="icon_prefix">Code</label> -->
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">phone</i> -->
+                                                        <input id="quota_amt" name="quota_amt" type="number"  min="0" class="validate">
+                                                        <label for="quota_amt" id="lbl_quota_amt">Amount</label>
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">phone</i> -->
+                                                        <input id="DM_Uses_Times" name="DM_Uses_Times" type="number"  min="0" class="validate">
+                                                        <label for="DM_Uses_Times" >Quota of number</label>
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                       <button class="waves-effect waves-light btn Create_Code_quota">Create</button>
+                                                     </div>
+                                                 
+                                                </div>
+                                           
+                                           </form>
+                                        </div>
+                                     
+                                        <div id="tab_deadline" class="col s12" style="display: none;">
+                                            
+                                            <form class="col s12">
+                                                <div class="row">                                                       
+                                               			<div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">account_circle</i> -->
+                                                        <input  type="text" readonly  value="<%=randomCode %>">
+                                                        <!-- <label for="">Code</label> -->
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">phone</i> -->
+                                                        <input id="dead_amt" name="dead_amt" type="number"  min="0" class="validate">
+                                                        <label for="dead_amt" >Amount</label>
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">phone</i> -->
+                                                        <input id="DM_DeadLine_Date" name="DM_DeadLine_Date" type="date"  min="0" class="">
+                                                          <!-- <label for="DM_DeadLine_Date" id="">Deadline</label>-->
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                       <button class="waves-effect waves-light btn Create_Code_deadline">Create</button>
+                                                     </div>
+                                                  
+                                                  
+                                                </div>
+                                           
+                                           </form>
+                                        </div>
+                          
+                          
+                                        <div id="tab_deadline_quota" class="col s12" style="display: none;">
+                                            
+                                            <form class="col s12">
+                                                <div class="row">                                                       
+                                               			<div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">account_circle</i> -->
+                                                        <input  type="text" readonly  value="<%=randomCode %>">
+                                                        <!-- <label for="icon_prefix">Code</label> -->
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">phone</i> -->
+                                                        <input id="dead_quota_amt" name="dead_quota_amt" type="number"  min="0" class="validate">
+                                                        <label for="dead_quota_amt" >Amount</label>
+                                                      </div>
+                                                 	  <div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">phone</i> -->
+                                                        <input id="DM_Uses_Times_dead_quota" name="DM_Uses_Times_dead_quota" type="number"  min="0" class="validate">
+                                                        <label for="DM_Uses_Times_dead_quota" >Quota of number</label>
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                        <!-- <i class="material-icons prefix">phone</i> -->
+                                                        <input id="DM_DeadLine_Date_quota" name="DM_DeadLine_Date_quota" type="date"  min="0" class="">
+                                                          <!-- <label for="DM_DeadLine_Date_quota" id="">Deadline</label>-->
+                                                      </div>
+                                                      <div class="input-field col s3">
+                                                       <button class="waves-effect waves-light btn Create_Code_deadline_quota">Create</button>
+                                                     </div>
+                                                  
+                                                  
+                                                </div>
+                                           
+                                           </form>
+                                        </div>
+                          
+                          
+                                        <div class="clearBoth"><br></div>
+                                        
+                                         <div class="card-content">
+                                                <div class="table-responsive">
+                                                    <table class="table table-striped table-bordered table-hover" id="tbl_discount">
+                                                        <thead>
+                                                            <tr>                                              
+
+                                                                <th>Date</th>    
+                                                                 <th>Code</th>  
+                                                                <th>Type</th>  
+                                                                <th>DeadLine Date</th>  
+                                                                <th>Amount Or Percent</th>
+                                                                <th>Quota Of Number</th>
+                                                                <th>Action</th>  
+
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <% 
+                                                               data.forEach(function(item) {  
+                                                               
+		let DM_Type = item.DM_Type=='A' ? "Amount" : item.DM_Type=='P' ? "Percentage" : item.DM_Type=='D' ? 'Deadline' :  item.DM_Type=='QD' ? 'Quota & Deadline' : item.DM_Type=='Q' ? 'Quota':''
+                                                               
+        let modal = item.DM_Type=='A' ? "#modal_A_P" : item.DM_Type=='P' ? "#modal_A_P" : item.DM_Type=='D' ? "#modal_deadLine" : item.DM_Type=='Q' ?  "#modal_quota" : item.DM_Type=='QD' ? "#modal_quota_deadline":''
+                                                               %>
+                                                                    <tr class="odd gradeX">                                               	
+                                                                    <td><%= moment(item.Create_Date).format( 'MMM-DD-YYYY') %>  
+                                                                    <td><%= item.DM_Code %></td>
+                                                                    <td><%= DM_Type %></td>   
+                                                                    <td><%= item.DM_DeadLine_Date %></td>   
+                                                                    <td><%= item.DM_Amount_Percent %></td>  
+                                                                    <td><%= item.DM_Uses_Times %></td>  
+                                                                    <th>
+                                                                          <button class="editCode" data-value='<%- JSON.stringify(item) %>' data-toggle="modal" data-target="<%=modal%>">
+                                                                            Edit
+                                                                          </button>
+                                                                          <button class="deleteCode" data-value="<%= item.DM_ID %>">
+                                                                            Delete
+                                                                          </button>
+                                                                    </th>  
+                                                                 </tr>
+                                                              <% }); %>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                      <button class="deleteCode" data-toggle="modal" data-target="#myModal2"  Delete </button>
+                    </div>
+                </div>
+
+
+                <div class="alert alert-success alertcustom" id="alertcustom" style="display:none">
+                   
+                </div>
+           		 <input type="hidden" id="DM_ID">
+   				 <div id="modal_A_P" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">                
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title" id="title_A_P"></h4>
+                        </div>
+                         <div class="modal-body">
+                                <label for="code">Current Discount Code:</label>
+                                <input type="text" class="form-control code" readonly>
+                
+                                <label for="pwd" id="lbl_A_P">Amount/Percentage:</label>
+                                <input type="number" min="0" class="form-control" id="amt_per">
+                                <span id="err"></span>
+                             
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" id="btn_update_code_A_P" data-id="">Update</button>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+  
+      
+<div id="modal_quota" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" id="title_quata">Update Quota Of Number</h4>
+        </div>
+         <div class="modal-body">
+             <label for="code">Current Discount Code:</label>
+             <input type="text" class="form-control code" readonly>
+
+             <label for="pwd" >Amount:</label>
+             <input type="number" min="0" class="form-control" id="amt_quota_edit">
+             <label for="pwd" >No Of Quota:</label>
+             <input type="number" min="0" class="form-control" id="DM_Uses_Times_edit">
+             <span id="err"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="btn_update_code_quota" >Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+  
+  
+<div id="modal_deadLine" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" id="title_deadLine">Update Deadline</h4>
+        </div>
+         <div class="modal-body">
+              					 <label for="code">Current Discount Code:</label>
+                                <input type="text" class="form-control code" readonly>
+                
+                                <label for="pwd" >Amount:</label>
+                                <input type="number" min="0" class="form-control" id="amt_deadline">
+                                <label for="pwd" >Deadline:</label>
+                                <input type="date" class="form-control" id="date_deadline">
+                                <span id="err"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  id="btn_update_code_deadLine"  >Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+  
+    
+<div id="modal_quota_deadline" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" id="title_deadLine">Update Quota and Deadline</h4>
+        </div>
+         <div class="modal-body">
+              					 <label for="code">Current Discount Code:</label>
+                                <input type="text" class="form-control code" readonly>
+                
+                                <label for="pwd" >Amount:</label>
+                                <input type="number" min="0" class="form-control" id="dead_quota_amt_edit">
+                              
+           					    <label for="pwd" >No Of Quota:</label>
+            					<input type="number" min="0" class="form-control" id="DM_Uses_Times_dead_quota_edit">
+           
+             					<label for="pwd" >Deadline:</label>
+                                <input type="date" class="form-control" id="DM_DeadLine_Date_quota_edit">
+                                <span id="err"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"  id="btn_update_code_deadLine_quota"  >Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include('../admin/footer'); %>
+  
+  
+  	 
+<script>
+    $(document).ready(function () {
+        $('#tbl_discount').dataTable();
+    });
+</script>

@@ -1,0 +1,123 @@
+<head>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Purchased Link</title>
+  <link rel="icon" href="<%= process.env.BASE_URL %>adm/public/Logo.png">
+
+<style>
+    .card {
+        width: 330px;
+        top: 25%;
+        padding: 10px;
+        border-radius: 30px;
+        background: #fff;
+        border: none;
+        height: auto;
+        position: relative;
+        display: table;
+    }
+    
+    .container {
+        height: 100vh
+    }
+    
+    body {
+        background: rgb(36, 34, 34)
+    }
+    
+    .mobile-text {
+        color: #989696b8;
+        font-size: 17px;
+        font-family: consolas;
+        margin: 0px;
+    }
+    
+    .form-control {
+        margin-right: 12px;
+        height: 40px;
+        padding: 10px;
+        margin: 5px 0px 10px;
+        width: 100%;
+        border-radius: 10px;
+    }
+    
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #0455ec;
+        outline: 0;
+        box-shadow: none;
+       
+    }
+    
+    .cursor {
+        cursor: pointer
+    }
+    .logo{
+        width: 100%;
+        height: auto;
+        position: relative;
+        text-align: center;
+        margin: 10px 0;
+    }
+    .btn-verify{
+    width: auto;
+    display: table;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 7px;
+    margin: auto;
+    transition: 0.2s;
+    background-image: linear-gradient(to left bottom, #fe9e76, #ff856e, #ff696e, #ff4975, #fa1981);
+    }
+    .txtStyle{
+        font-size: 25px;
+        font-weight: 600;
+        font-family: consolas;
+        color: gray;
+        padding: 5px;
+    }
+</style>
+
+  
+</head>
+<body>
+<center>
+
+    <div class="d-flex justify-content-center align-items-center container">
+        <div class="card py-5 px-3" style="display:block;">
+    
+                <div class="logo">
+                    <img src="/Logo.png"/>
+                </div>
+                <div  id="verify_div">
+                    <h3 class="mobile-text">Verify This Link </h3>
+                    <span class="mobile-text">Email : <b class="text-danger"><%=BM_Email%></b></span>
+                    <br>
+                <div style="font-size: 15px;margin: 10px;">
+                    <input type="password" id="BM_Password" class="form-control"  autofocus="" placeholder="enter password">
+                     <button id="btn_verify" class="btn-verify">Verify</button>
+                     <div style="text-align: center;font-size: 20px;font-family: consolas;font-weight: bold;margin-top: 5px;">
+                            <span id="msg" style="color:#ff696e;"></span>
+                     </div>
+                     <input type="hidden" value="<%=BM_Url_ID%>" id="BM_Url_ID">
+                    <input type="hidden" value="<%=BM_ID%>" id="BM_ID">
+                     <input type="hidden" value="<%=BM_Email%>" id="BM_Email">
+                </div>
+            </div>
+            <div class="" id="dwnld_div">
+            
+            </div>
+           
+        </div>
+        
+    </div>
+</center>
+<script src="<%= process.env.BASE_URL %>adm/public/assets/js/jquery-1.10.2.js"></script>
+<script src="<%= process.env.BASE_URL %>adm/public/js/custom.js"></script> 
+</body>
+
+

@@ -1,0 +1,101 @@
+server {
+          server_name uatenviro33.expy.bio www.uatenviro33.expy.bio;
+
+          add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+          add_header Content-Security-Policy 'frame-ancestors https://uatenviro33.expy.bio/';
+          add_header X-Content-Type-Options nosniff;
+          add_header Referrer-Policy "strict-origin";
+          add_header Permissions-Policy "geolocation=(),midi=(),sync-xhr=(),microphone=(),camera=(),magnetometer=(),gyroscope=(),fullscreen=(self),payment=()";
+          add_header X-XSS-Protection "1; mode=block";
+          add_header X-Frame-Options "SAMEORIGIN";
+
+
+          #root /var/www/html/app/;    
+
+        #location / {
+         #  try_files $uri /$uri /index.html;
+       # }
+
+
+      
+      location / {
+           # try_files $uri /$uri /index.html;
+ 		      	root /var/www/html/app; 
+  		    	proxy_pass http://127.0.0.1:3000;
+        }
+
+
+
+        location /admin {
+   			  
+			root /var/www/html/adm; 
+			
+         	#try_files $uri $uri/ /admin/index.html; # try_files will need to be relative to root
+  		    proxy_pass http://127.0.0.1:9000;
+          proxy_http_version 1.1;
+          proxy_set_header    Host             $host;
+          proxy_set_header    X-Real-IP        $remote_addr;
+          proxy_set_header    X-Forwarded-For  $proxy_add_x_forwarded_for;
+          proxy_read_timeout 1800;
+          proxy_connect_timeout 1800;
+              
+        }
+
+            
+   	location ^~ /adm/
+    {    
+      root  /var/www/html;        
+    }
+
+
+       access_log /var/log/nginx/site_nginx-access.log;
+        error_log  /var/log/nginx/site_nginx-error.log;
+
+    #listen 443 ssl; # managed by Certbot
+    #ssl_certificate /etc/letsencrypt/live/expy.bio/fullchain.pem; # managed by Certbot
+    #ssl_certificate_key /etc/letsencrypt/live/expy.bio/privkey.pem; # managed by Certbot
+    #include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    #ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/uatenviro33.expy.bio/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/uatenviro33.expy.bio/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+#server {
+ #   if ($host = www.expy.bio) {
+  #      return 301 https://$host$request_uri;
+   # } # managed by Certbot
+
+
+    #if ($host = expy.bio) {
+     #   return 301 https://$host$request_uri;
+    #} # managed by Certbot
+
+
+      #    server_name expy.bio www.expy.bio;
+     #     listen 80;
+    #return 404; # managed by Certbot
+
+
+
+
+#}	
+server {
+    if ($host = uatenviro33.expy.bio) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+          server_name uatenviro33.expy.bio www.uatenviro33.expy.bio;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}

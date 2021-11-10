@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<script src="js/jquery.min.js"></script>
+<link rel="stylesheet" href="css/dialog.css">
+<link rel="stylesheet" href="css/dialog-simple.css">
+<body>
+
+<h2>HTML Table</h2>
+
+
+<form id="userForm">
+    <button type="button" id="btn_add"> Add New User </button>
+    <div id="Add_user_div" style="display:none;">
+
+            <input type="text" id="username" name="username" placeholder="username">
+            <input type="text" id="email" name="email" placeholder="email">
+            <input type="password" id="password" name="password" placeholder="password">
+            <button id="btn_insert_user" >Add</button>    
+            <button id="btn_update" style="display:none;">Update</button>    
+            <button id="btn_cancel" >X</button>    
+            <input type="hidden" id="userId" name="userId">
+        </div>
+</form>
+<table id="tbl_data">
+  
+</table>
+
+
+<script type="text/javascript" src="js/custom.js"></script>
+
+<script type="text/javascript" src="js/dialog.js"></script>
+<script type="text/javascript" src="js/dialog-polyfill.js"></script>
+
+
+
+<script>
+    $(document).ready(function () {
+       // var my_div = $("#tbl_data");
+       // $("#HButton").on("click", function () {
+          // GetData();
+         
+        //});
+    
+
+    });
+   
+   // $("#btn_insert_user").on("submit",function (e) {
+     //   e.preventDefault();
+      //  $.post("",$(this).serialize(), function( data ) {
+       // console.log(data);
+       // });
+    //});
+
+
+
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,157 @@
+<%- include('../admin/header'); %>
+
+<div class="header"> 
+    <h1 class="page-header">
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+    <li><a href="#">Dashboard</a></li>
+    <li class="active">celebrity</li>
+</ol> 
+                
+</div>
+
+<div id="page-inner">
+	<div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                            <div class="card-action">
+                                 Celebrity
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="tbl_celebrity">
+                                        <thead>
+                                            <tr>
+                                                <th>Celebrity's Name</th>
+                                                <th>Celebrity's Email</th>
+                                                <th>Referred By</th>
+                                                <th>Total Referred</th>
+                                                <th>Created Date</th>
+                                                <th>Bank Details</th>
+                                                <th>PayPal Details</th>
+                                            	<th>Action </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% data.forEach(function(item) { 
+                                       
+                                               %>
+                                                <tr class="odd gradeX">
+                                                	
+                                                    <td><%= item.JM_Name %></td>
+                                                    <td><%= item.JM_Email %></td>
+                                                    <td><%= item.JM_Referral %></td>
+                                                     <td><%= item.totalRef %></td>
+                                                    <td><%= moment(item.Create_Date).format( 'MMM-DD-YYYY') %>   </td>
+                                                    <td>
+                                                        <p>Account No: <%= item.JM_Acc_No %> </p>
+                                                        <p>Beneficiary Name: <%= item.JM_Beneficiary_Name %> </p>
+                                                        <p>IFSC Code: <%= item.JM_Acc_Code %> </p> 
+                                                        <p>SWIFT Code:<%= item.JM_SWIFT_Code %> </p>
+                                                    </td>
+                                                    <td>
+                                                        <p>Name: <%= item.JM_PayPal_Name %> </p>
+                                                        <p>Phone: <%= item.JM_PayPal_Phone %> </p>
+                                                        <p style="display:none;">username: <%= item.JM_PayPal_UserName %> </p> 
+                                                        <p style="display:none;">Email:<%= item.JM_PayPal_Email %> </p>
+                                                    
+                                                    </td>
+
+
+                                                        <% let checked = item.JM_Verified==1 ? "checked" : "" %>
+                                                        <% let checkedRequest = item.isRequested==1 ? "checked" : "" %>
+                                                        <% let checkedBlocked = item.isBlocked==1 ? "checked" : "" %>
+                                                            
+                                                        <% let isForLandingPage = item.isForLandingPage==1 ? "checked" : "" %>
+                                                 
+                                                    <td class="center">
+                                                      <div style="width:100%;text-align: left;">
+                                                         <p>
+                                                            <input type="checkbox" disabled class="filled-in"  id="chk_req_<%=item.JM_ID%>" value="chk_req_<%=item.JM_ID%>" <%=checkedRequest%>>                                                            
+                                                            <label for="chk_req_<%=item.JM_ID%>">Requested</label>
+                                                        </p>
+                                                     	  <p>
+                                                            <input type="checkbox" class="filled-in Verify" onclick="doVerify('<%=item.JM_ID%>')" id="chk_<%=item.JM_ID%>" value="chk_<%=item.JM_ID%>" <%=checked%>>                                                            
+                                                            <label for="chk_<%=item.JM_ID%>">Verify</label>
+                                                        </p>
+                                                      </div>
+                                                      <div style="display: inline-block; margin:0 auto; width:100%;text-align: left;">
+                                                       
+                                                        <p>
+                                                            <input type="checkbox" class="filled-in block" id="block_<%=item.JM_ID%>" value="<%=item.JM_ID%>" <%=checkedBlocked%>>                                                         
+                                                            <label for="block_<%=item.JM_ID%>">Block</label>
+                                                        </p>
+                                                         <p>
+                                                             <!-- <input type="checkbox" class="filled-in delete" id="delete_<%=item.JM_ID%>" value="<%=item.JM_ID%>">                                                         
+                                                            <label for="delete_<%=item.JM_ID%>">Delete</label> -->
+                                                           
+                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                                                            onclick="openModal('<%=item.JM_ID %>')">
+                                                            <i class="fa fa-times"></i> Delete
+                                                                    </button>
+                                                        </p>
+                                                      </div>
+                                                      <div style="float:right;width:100%;text-align: left;">
+                                                         <input type="hidden" name="JM_ID" value="<%=item.JM_Email%>">
+                                                         <p id="edit_<%=item.JM_ID%>"  data-value="<%=item.JM_Email%>" class="action editProfile" style="font-size: 23px;cursor: pointer;"> 
+                                                            <i class="fa fa-edit"></i>
+                                                            <span style="font-size: 14px; margin-left: 13px;">Edit</span>
+                                                                </a>
+                                                            </p>
+                                                       		 <p>
+                                                       		  <input type="checkbox" class="filled-in priority" id="priority_<%=item.JM_ID%>" value="<%=item.JM_ID%>" <%=isForLandingPage%>>                                                         
+                                                           	 <label for="priority_<%=item.JM_ID%>">Landing page</label>
+                                                           </p>
+                                                      </div>
+                                                       
+                                                    </td>
+                                                 </tr>
+                                              <% }); %>
+                                        </tbody>
+                                    </table>
+                                             
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+
+
+                <div class="alert alert-success alertcustom" id="alertcustom" style="display:none">
+                   
+                </div>
+           
+
+                <div id="deleteModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">
+  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Warning</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Do you want to delete ?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <input type="hidden" id="JM_ID">                       
+                         
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left: 5px;">Close</button>
+                           <button type="button" class="btn btn-primary delete" id="btn_ok" style="color: white;"> Okay</button>
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+
+<%- include('../admin/footer'); %>
+<script>
+    $(document).ready(function () {
+        $('#tbl_celebrity').dataTable();
+    });
+</script>

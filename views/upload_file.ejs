@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="js/jquery.min.js"></script>
+    <title>Simple Upload Example</title>
+</head>
+<body>
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="text" name="fileName">
+    <input type="file" name="upload" multiple>
+    <input type="button" value="Upload" name="submit" onclick="UploadFile();">
+    <span id = "status"></span>
+</form>
+
+    <!-- <% arr.forEach(function(dat) { 
+      if(parseInt(dat.msg) > 0){ %>
+        <h1>Uploaded Successfully</h1>
+    <%  }else{ %>
+        <h1></h1>
+    <%  }
+       
+     }); %> -->
+ 
+
+
+<script>
+    function UploadFile(){
+        event.preventDefault();
+    if (typeof FormData !== 'undefined') {
+
+        // send the formData
+        var formData = new FormData( $("#uploadForm")[0] );
+        //alert();
+        $.ajax({
+            type:'POST',
+            url:"/form-submit",
+            async : false,
+            cache : false,
+            contentType : false,
+            processData : false,
+            data : formData,
+            success: function(res){
+                
+              
+            }, 
+            error:function(res)
+            {
+                //MessageBox(res,"danger");
+                showToast(res);
+            }
+        
+            });
+    }else {
+        showToast("Your Browser Don't support FormData API! Use IE 10 or Above!");
+    }
+}
+    </script>
+
+</body>
+</html>

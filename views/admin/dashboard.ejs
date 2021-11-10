@@ -1,0 +1,183 @@
+<div class="header"> 
+  <h1 class="page-header">
+      Dashboard
+  </h1>
+  <ol class="breadcrumb">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Dashboard</a></li>
+      <li class="active">Data</li>
+  </ol> 
+                
+</div>
+
+<% 
+  var noOfRequest=0;
+  var totalSales=0;
+  var noOfCreator=0;
+  var noOfReferral=0;
+  var expyCommission=0,requestCompleted=0,totalPageViews=0,totalUniquePageVisitor=0;
+  
+
+sales.forEach(function(item) {        
+  totalSales=item.totalSales;
+  noOfRequest=item.noOfSales; 
+   expyCommission=totalSales*.10;
+});
+  
+creators.forEach(function(item) { 
+    noOfCreator=item.noOfCreator;
+});
+
+
+referralRequest.forEach(function(item) {  
+    noOfReferral=item.noOfReferral;
+});
+
+
+   
+  completedRequest.forEach(function(item) 
+  {  
+    requestCompleted=item.completedRequest;
+
+  });
+
+ uniqueViews.forEach(function(item) 
+  {  
+    totalUniquePageVisitor = item.uniqueViews;
+
+  });
+
+  totalViews.forEach(function(item) 
+  {  
+    totalPageViews = item.totalViews;
+
+  });
+
+
+%>
+<div id="page-inner">
+<div class="dashboard-cards"> 
+    <div class="row">
+        <!-- creators -->
+        <div class="col-xs-12 col-sm-6 col-md-4">            
+              <div class="card horizontal cardIcon waves-effect waves-dark">
+              <div class="card-image green">
+              <i class="material-icons dp48">supervisor_account</i>
+              </div>
+              <div class="card-stacked green">
+              <div class="card-content">
+              <h3><%= noOfCreator %></h3> 
+              </div>
+              <div class="card-action">
+              <strong>Creators</strong>
+              </div>
+              </div>
+              </div>           
+        </div>
+           <!-- total transaction -->
+        <div class="col-xs-12 col-sm-6 col-md-4">              
+            <div class="card horizontal cardIcon waves-effect waves-dark">
+            <div class="card-image blue">
+            <i class="material-icons dp48">equalizer</i>
+            </div>
+            <div class="card-stacked blue">
+            <div class="card-content">
+            <h3><%= noOfRequest %></h3> 
+            </div>
+            <div class="card-action">
+            <strong>Transaction </strong>
+            </div>
+            </div>
+            </div>               
+      </div>
+     <!-- total sales -->
+        <div class="col-xs-12 col-sm-6 col-md-4">
+        
+            <div class="card horizontal cardIcon waves-effect waves-dark">
+            <div class="card-image orange">
+            <i class="material-icons dp48">shopping_cart</i>
+            </div>
+            <div class="card-stacked orange">
+            <div class="card-content">
+            <h3> <i class="fa fa-inr" aria-hidden="true"></i>
+              
+              <%= totalSales.toFixed(2) %></h3> 
+            </div>
+            <div class="card-action">
+            <strong>Sales</strong>
+            </div>
+            </div>
+            </div> 
+        </div>
+     <!-- expy commission-->
+        <div class="col-xs-12 col-sm-6 col-md-4">            
+            <div class="card horizontal cardIcon waves-effect waves-dark">
+            <div class="card-image red">
+            <i class="material-icons dp48">import_export</i>
+            </div>
+            <div class="card-stacked red">
+            <div class="card-content">
+          <h3>
+            <i class="fa fa-inr" aria-hidden="true"></i>
+              <%= expyCommission.toFixed(2) %>
+           </h3> 
+            </div>
+            <div class="card-action">
+            <strong>Expy commission</strong>
+            </div>
+            </div>
+            </div>
+      </div>
+      <!-- completed request-->
+      <div class="col-xs-12 col-sm-6 col-md-4">            
+            <div class="card horizontal cardIcon waves-effect waves-dark">
+            <div class="card-image red">
+            <i class="material-icons dp48">done_all</i>
+            </div>
+            <div class="card-stacked red">
+            <div class="card-content">
+          <h3><%= requestCompleted %></h3> 
+            </div>
+            <div class="card-action">
+            <strong>Completed requests</strong>
+            </div>
+            </div>
+            </div>
+      </div>
+        <!-- Total page views-->
+      <div class="col-xs-12 col-sm-6 col-md-4">            
+          <div class="card horizontal cardIcon waves-effect waves-dark">
+          <div class="card-image red">
+          <i class="material-icons dp48">pageview</i>
+          </div>
+          <div class="card-stacked red">
+          <div class="card-content">
+         <h3><%= totalPageViews %></h3> 
+          </div>
+          <div class="card-action">
+          <strong>Total page views</strong>
+          </div>
+          </div>
+          </div>
+     </div>
+    <!-- Unique page visitors -->
+      <div class="col-xs-12 col-sm-6 col-md-4">            
+            <div class="card horizontal cardIcon waves-effect waves-dark">
+            <div class="card-image green">
+            <i class="material-icons dp48">view_carousel</i>
+            </div>
+            <div class="card-stacked green">
+            <div class="card-content">
+          <h3><%= totalUniquePageVisitor %></h3> 
+            </div>
+            <div class="card-action">
+            <strong> Unique page visitors</strong>
+            </div>
+            </div>
+            </div>
+      </div>
+
+
+    </div>
+</div>
+<!-- /. ROW  --> 

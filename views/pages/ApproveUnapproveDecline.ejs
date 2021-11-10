@@ -1,0 +1,89 @@
+<%- include('../admin/header'); %>
+
+<div class="header"> 
+    <h1 class="page-header">
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+    <li><a href="#">Dashboard</a></li>
+    <li class="active">Approve/Unapprove Declined Request</li>
+</ol> 
+                
+</div>
+
+<div id="page-inner">
+	<div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                            <div class="card-action">
+                                Approve/Unapprove Declined Request
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="tbl_dec_request">
+                                        <thead>
+                                            <tr>
+                                                <th>Request date</th>    
+                                                <th>Follower's Name</th>  
+                                                <th>Service</th>  
+                                                <th>Price</th>  
+                                                <th>Reason for declined</th>  
+                                                <th>Creator's Name</th> 
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% 
+                                               data.forEach(function(item) { 
+                                               %>
+                                               	 <tr class="odd gradeX">                                               	
+                                                    <td><%= moment(item.Accept_Decline_Date).format( 'MMM-DD-YYYY') %>  
+                                                    <td><%= item.BM_Name %></td>
+                                                    <td><%= item.serviceName %></td>
+                                                    <td><%= item.Actual_Price %></td>
+                                                    <td><%= item.Dec_Reason %></td>   
+                                                    <td><%= item.JM_Name %></td>    
+                                                    <th>
+                                                         <button class="approve"                                                            
+                                                             data-jm="<%= item.JM_ID %>"
+                                                             data-bm="<%= item.BM_ID %>" 
+                                                             data-tax="<%= item.Tax %>"
+                                                             data-fee="<%= item.Fee %>" 
+                                                             data-actual="<%= item.Actual_Price %>"   
+                                                             data-amt="<%= item.BM_Purchase_Amt %>" 
+                                                             data-isfree="<%=item.isFree %>" 
+                                                             data-btn="1">
+                                                            Approve
+                                                          </button>
+                                                          <button class="approve"
+                                                             data-jm="<%= item.JM_ID %>"
+                                                             data-bm="<%= item.BM_ID %>" 
+                                                             data-tax="<%= item.Tax %>"
+                                                             data-fee="<%= item.Fee %>" 
+                                                             data-actual="<%= item.Actual_Price %>"   
+                                                             data-amt="<%= item.BM_Purchase_Amt %>" 
+                                                             data-isfree="<%=item.isFree %>" 
+                                                             data-btn="0">
+                                                           Unapprove
+                                                         </button>
+                                                    </th>  
+                                                 </tr>
+                                              <% }); %>
+                                        </tbody>
+                                    </table>
+                                             
+                                </div>                                
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+
+                <div class="alert alert-success alertcustom" id="alertcustom" style="display:none">                   
+                </div>
+           
+
+
+
+<%- include('../admin/footer'); %>

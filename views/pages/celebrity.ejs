@@ -1,0 +1,422 @@
+<%- include('../admin/header'); %>
+
+  <style>
+  
+  .cardInline{
+   	text-align:center;
+    padding: 20px;
+    border-radius: 0 0 2px 2px;
+    min-height: 100px;
+
+  }
+    .cardInline .card-title{
+      font-size:20px;
+      line-height:20px !important;
+    } 
+    
+    .payBtn{
+          display: table;
+        margin: auto;
+        margin-top: 40px;
+      color:#fff;
+ 	 text-transform: capitalize;
+    }
+    .indicator{
+      display:none;
+    }
+  </style>
+<div class="header"> 
+    <h1 class="page-header">
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+    <li><a href="#">Dashboard</a></li>
+    <li class="active">celebrity</li>
+</ol> 
+                
+</div>
+
+<div id="page-inner">
+	<div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                          <div class="card-action">
+                            Celebrity
+                                                
+                          <a href="/admin/exp_admin_panel/celebrity_all" >
+                            <button style="color: #323232;">Get All Data</button>
+                            </a>
+                          </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                  <!-- <button className="btun export" style="margin:10px 0,height:40px;" onclick="exportTable('csv_celebrity')">Export CSV</button>-->
+                                    <table class="table table-striped table-bordered table-hover" id="tbl_celebrity">
+                                        <thead>
+                                            <tr>
+                                                <th>Celebrity's Name</th>
+                                                <th>Celebrity's Email</th>
+                                                <th>Celebrity's Page</th>
+                                                <th>Referred By</th>
+                                                <th>Total Referred</th>
+                                                <th>Created Date</th>
+                                                <th>Bank/PayPal Details</th>
+                                                <th>Payment Details</th>
+                                              	<th>Action </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% data.forEach(function(item) { 
+                                       
+                                                var Creator_Page=process.env.BASE_URL+item.JM_User_Profile_Url
+                                               var isPayPal_or_Bank='';
+                                                var JM_Name=item.JM_Name;
+                                               JM_Name=JM_Name.replace(/[\\$'"]/g, "\\$&");
+
+                                               %>
+                                                <tr class="odd gradeX">
+                                                	
+                                                    <td><%= item.JM_Name %></td>
+                                                    <td><%= item.JM_Email %></td>
+                                                    <td><a href="<%= Creator_Page %>" target="_blank"><%= Creator_Page %></a></td>
+                                                    <td><%= item.JM_Referral %></td>
+                                                    <td><%= item.totalRef %></td>
+                                                    <td><%= moment(item.Create_Date).format( 'MMM-DD-YYYY') %>   </td>
+                                                    <td>
+                                                     
+
+                                                        <% if(item.JM_Acc_Code!='NA' && item.JM_Acc_Code!=null &&  item.JM_Acc_Code.toString().length > 0) {
+                                                          	isPayPal_or_Bank='B'
+                                                          %>
+                                                            <div>
+                                                                <p>Account No: <%= item.JM_Acc_No %> </p>
+                                                                <p>Beneficiary Name: <%= item.JM_Beneficiary_Name %> </p>
+                                                                <p>IFSC Code: <%= item.JM_Acc_Code %> </p> 
+                                                                <p>SWIFT Code:<%= item.JM_SWIFT_Code %> </p>
+                                                            </div>
+                                                        <% } else if(item.JM_PayPal_Email!='NA' && item.JM_PayPal_Email.length > 0) { isPayPal_or_Bank='P' %>
+                                                            <div>
+                                                                <p>Name: <%= item.JM_PayPal_Name %> </p>
+                                                                <p>Phone: <%= item.JM_PayPal_Phone %> </p>
+                                                                <p style="display:none;">username: <%= item.JM_PayPal_UserName %> </p> 
+                                                                <p style="display:block;">Email:<%= item.JM_PayPal_Email %> </p>
+                                                            </div>
+                                                        <% } %>
+                                                       
+                                                        
+                                                    </td>
+                                                 <!-- payment details by opening a modal -->
+                                                    <td>
+                                                        <input type="button" class="viewPayment" data-toggle="modal" data-target="#paymentModal" data-bankpay="<%= isPayPal_or_Bank %>" id="<%= item.ID %>" data-value="<%= item.JM_ID %>"  value="View">
+                                                    </td>
+
+                                                        <% let checked = item.JM_Verified==1 ? "checked" : "" %>
+                                                        <% let checkedRequest = item.isRequested==1 ? "checked" : "" %>
+                                                        <% let checkedBlocked = item.isBlocked==1 ? "checked" : "" %>
+                                                            
+                                                        <% let isForLandingPage = item.isForLandingPage==1 ? "checked" : "" %>
+
+
+                                           
+                                                        
+                                                    <td class="center">
+                                                      <div style="width:100%;text-align: left;">
+                                                         <p>
+                                                            <input type="checkbox" disabled class="filled-in"  id="chk_req_<%=item.JM_ID%>" value="chk_req_<%=item.JM_ID%>" <%=checkedRequest%>>                                                            
+                                                            <label for="chk_req_<%=item.JM_ID%>">Requested</label>
+                                                        </p>
+                                                     	  <p>
+                                                            <input type="checkbox" class="filled-in Verify"   data-toggle="modal" data-target="#alertModal"  onclick="openAlertModal(this,'<%=item.JM_ID %>','V','<%=JM_Name %>')" id="chk_<%=item.JM_ID%>" value="chk_<%=item.JM_ID%>" <%=checked%>>                                                            
+                                                            <label for="chk_<%=item.JM_ID%>">Verify</label>
+                                                        </p>
+                                                      </div>
+                                                      
+                                                      
+                                                      <div style="display: inline-block; margin:0 auto; width:100%;text-align: left;">
+                                                       
+                                                        <p>
+                                                            <input type="checkbox" class="filled-in" id="block_<%=item.JM_ID%>"
+                                                                     data-toggle="modal" data-target="#alertModal"  onclick="openAlertModal(this,'<%=item.JM_ID %>','B','<%=JM_Name %>')"
+                                                                   value="<%=item.JM_ID%>" <%=checkedBlocked%>>                                                         
+                                                            <label for="block_<%=item.JM_ID%>">Block</label>
+                                                        </p>
+                                                         <p>
+                                                             <!-- <input type="checkbox" class="filled-in delete" id="delete_<%=item.JM_ID%>" value="<%=item.JM_ID%>">                                                         
+                                                            <label for="delete_<%=item.JM_ID%>">Delete</label> -->
+                                                           
+                                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal"
+                                                            onclick="openModal('<%=item.JM_ID %>')">
+                                                            <i class="fa fa-times"></i> Delete
+                                                                    </button>
+                                                        </p>
+                                                      </div>
+                                                      <div style="float:right;width:100%;text-align: left;">
+                                                         <input type="hidden" name="JM_ID" value="<%=item.JM_Email%>">
+                                                         <p id="edit_<%=item.JM_ID%>"  data-value="<%=item.JM_Email%>" class="action editProfile" data-type="me" style="font-size: 23px;cursor: pointer;padding-left: 0;color:#9e9e9e;"> 
+                                                            <i class="fa fa-edit"></i>
+                                                            <span style="font-size: 14px; margin-left: 5px;">Edit</span>
+                                                                </a>
+                                                            </p>
+                                                       		 <p>
+                                                       		  <input type="checkbox" class="filled-in" id="priority_<%=item.JM_ID%>"
+                                                            data-toggle="modal" data-target="#alertModal"  onclick="openAlertModal(this,'<%=item.JM_ID %>','L','<%=JM_Name %>','<%=item.Landing_Image %>','<%=item.isForLandingPage %>')"
+                                                                     value="<%=item.JM_ID%>" <%=isForLandingPage%>>                                                         
+                                                           	 <label for="priority_<%=item.JM_ID%>">Landing page</label>
+                                                           </p>
+                                                      </div>
+                                                          
+                                                       <div style="float:right;width:100%;text-align: left;">
+                                                         	<input type="hidden" name="JM_ID" value="<%=item.JM_Email%>">
+                                                             <p id="stats_<%=item.JM_ID%>"  data-value="<%=item.JM_Email%>"  data-type="statis"
+                                                                class="action editProfile" style="font-size: 23px;cursor: pointer;padding-left: 0;color:#9e9e9e;"> 
+                                                          		 <i class="fa fa-search" aria-hidden="true"></i>
+                                                           	   <span style="font-size: 14px; margin-left: 5px;">Stats</span>
+                                                               
+                                                            </p>
+                                                       		
+                                                      </div>
+                                                       
+                                                    </td>
+                                                 </tr>
+                                              <% }); %>
+                                        </tbody>
+                                    </table>
+                                             
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+
+
+                <div class="alert alert-success alertcustom" id="alertcustom" style="display:none;z-index: 99999;">
+                   
+                </div>
+           
+
+                <div id="deleteModal" class="modal fade" role="dialog" data-backdrop='static' data-keyboard='false'>
+                    <div class="modal-dialog modal-sm">  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                       <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                          <h4 class="modal-title">Warning</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Do you want to delete ?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <input type="hidden" id="JM_ID">                       
+                         
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left: 5px;">Close</button>
+                           <button type="button" class="btn btn-primary delete" id="btn_ok" style="color: white;"> Okay</button>
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+
+                      <!--alert for all-->
+                              
+                 <div id="alertModal" class="modal fade" role="dialog" data-backdrop='static' data-keyboard='false'>
+                    <div class="modal-dialog modal-md">  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                          <h4 class="modal-title">Warning</h4>
+                        </div>
+                        <div class="modal-body" id="modelBody">
+                          <p>Do you want to 
+                            <span  id="alert_title"></span>
+                          </p>
+                         
+                        </div>
+                        <div class="modal-footer">
+                          <input type="hidden" class="JM_ID" > 
+                          <p style="color:#1c5c06;display:none;float: left;font-weight: bold;" id="upload_msg"></p>
+                           <button type="button" class="btn btn-danger btn_cancel_alert" id="btn_cancel_alert"  data-dismiss="modal" style="margin-left: 5px;">Close</button>
+                           <button type="button" class="btn btn-primary btn_ok_alert" id="btn_ok_alert"  style="color: white;"> Okay</button>
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+                              
+                              
+                              
+
+
+                  <div id="paymentModal" class="modal fade" role="dialog" data-backdrop='static' data-keyboard='false' style="overflow-y: auto;">
+                    <div class="modal-dialog modal-lg">
+  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                          <h4 class="modal-title">Payment Details</h4>
+                        </div>
+                        <div class="modal-body">
+                            	<div class="col-md-3 col-sm-3">
+                          			<div class="card">                                
+                                      <div class="card-content cardInline">
+                                        <span class="card-title activator grey-text text-darken-4" id="totalEarning">
+                                          Total Earnings 
+                                       
+                                        </span>
+                                          <!--<p><a href="#">This is a link</a></p>-->
+                                      </div>
+                                      <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                                      </div>
+                                    </div>
+                                </div>
+                            	<div class="col-md-3 col-sm-3">
+                          			<div class="card">
+                                     
+                                      <div class="card-content cardInline">
+                                        <span class="card-title activator grey-text text-darken-4" id="totalPayout">
+                                          Total Payout                                       
+                                        </span>                                         
+                                      </div>
+                                      <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                                      </div>
+                                    </div>
+                                </div>
+                            	<div class="col-md-3 col-sm-3">
+                          			<div class="card">                                    
+                                      <div class="card-content cardInline">
+                                        <span class="card-title activator grey-text text-darken-4" id="totalWallet">
+                                          Total Wallet
+                                          </span>
+                                      </div>
+                                      <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                                      </div>
+                                    </div>
+                                </div>
+                        
+                        	  <div class="col-md-3 col-sm-3">
+                          			<div class="">                                    
+                                      <div class="">                                       
+                                          <a href="#" class="btn payBtn" data-toggle="modal" data-target="#payoutModal" >
+                                            <span class="card-title activator grey-text text-darken-4">
+                                                      Send Payout
+                                             </span>
+                                          </a>
+                                      </div>
+                                     
+                                    </div>
+                                </div>
+                          
+                                <div class="col">
+                                   <ul class="tabs">
+                                     
+                                     <li class="tab col s3"><a href="#test1" class="" style="text-transform: capitalize;">All Transactions</a></li>
+                                     <li class="tab col s3"><a class="active" href="#test2" style="text-transform: capitalize;">All Payments</a></li> 
+                                     
+                                   <div class="indicator" style="right: 158.469px; left: 79.5312px;"></div></ul>
+                                 </div>
+                                 <div class="clearBoth"><br></div>
+                          
+                                 <div id="test1" class="col s12" style="display: none;">
+                    						   <div class="table-responsive" style="overflow: auto;max-height: 500px;">                                                
+                                                    <table class="table table-striped table-bordered table-hover" id="tbl_all_tran">
+                                                          <thead>
+                                                            <tr> 
+                                                                  <th>Date</th>    
+                                                                  <th>Name</th>  
+                                                                  <th>Email</th>  
+                                                                  <th>Service Title</th>  
+                                                                  <th>Service Amount</th>  
+                                                                  <th>Status</th> 
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody id="tbl_all_tran_tbody">
+                                                            
+                                                          </tbody>
+                                                   </table>
+                                                </div>
+                                                          
+                        		  </div>
+                                 <div id="test2" class="col s12" style="display: block;">
+                        					   <div class="table-responsive" style="overflow: auto;max-height: 500px;">
+                                                 
+                                                    <table class="table table-striped table-bordered table-hover" id="tbl_all_payment">
+                                                          <thead>
+                                                            <tr> 
+                                                                  <th>Date</th>    
+                                                                  <th>Amount</th>  
+                                                                  <th>Payout Id</th>                                                                  
+                                                                 
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody id="tbl_all_payment_tbody">
+                                                            
+                                                          </tbody>
+                                                   </table>
+                                                </div>	
+                          	
+                         		 </div>
+                          
+                                <div class="clearBoth"><br></div>
+                               
+                        </div>
+                        <div class="modal-footer">
+                          <input type="hidden" id="JM_ID">                       
+                         
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left: 5px;">Close</button>
+                         
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+
+                              
+                              
+                              
+                <div id="payoutModal" class="modal fade" role="dialog" data-backdrop='static' data-keyboard='false'>
+                    <div class="modal-dialog modal-sm">
+  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Payout</h4>
+                        </div>
+                        <div class="modal-body">
+                          <input type="number" min="0" placeholder="Enter Amount" id="pay_amt">
+                          
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left: 5px;" id="btn_payout_close">Close</button>
+                           <button type="button" class="btn btn-primary payout" id="btn_payout_ok" style="color: white;" > Okay</button>
+                        </div>
+                        <p id="msg_payout">
+                          
+                        </p>
+                      </div>
+  
+                    </div>
+                  </div>
+
+
+<%- include('../admin/footer'); %>
+<script>
+ 
+$(document).ready(function() {
+    $('#tbl_celebrity').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    } );
+} );
+</script>

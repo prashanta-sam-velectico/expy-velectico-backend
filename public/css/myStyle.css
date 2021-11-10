@@ -1,0 +1,21 @@
+.alertcustom{
+    width: 50%;
+    height: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    bottom: 0;
+}
+
+.action{
+    cursor:pointer;
+    font-size: 20px;
+    padding: 5px;
+    margin: 5px;
+    }
+    
+    
+    .delete{
+    color:red';
+    }

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+       <!-- <script src='https://8x8.vc/external_api.js' async></script>-->
+         <script src='https://expy.bio/adm/public/js/external_api.js' async></script>
+         <style>
+          body{
+            margin:0;
+            padding:0;
+               
+          }
+        
+            iFrame {
+                  height:  100vh !important;
+                  width: 100%  !important;
+                  border: 0px;
+            }
+          	.meetingheader{
+          width: 100%;
+          height: auto;
+          padding: 10px 0;   
+           background: #0c0b0c;
+        }
+        .meetingheader .logo{
+          width: 160px;
+          height: auto;
+          margin: auto;
+        }
+        .meetingheader .logo img{
+          width: 100%;
+        }
+        .meetingfooter{
+          width: 100%;
+          height: auto;
+          padding: 10px 20px;
+          background: #0c0b0c;
+          display: table;
+          box-sizing: border-box;
+        }
+        .meetingfooter .footer-logo{
+          width: 100px;
+          height:auto;
+          position: relative;
+          float: left; 
+        }
+        .meetingfooter .footer-logo img{
+          width: 100%;
+        }
+        .links{
+          margin: 0;
+          padding: 0;
+          list-style: none;
+          float: right;
+          color: #fff;
+        }
+        .links li{
+          display: inline-block;
+          margin: 0;
+          padding: 0;
+        }
+        .links li a{
+          color: #fff;
+          display: block;
+          text-decoration: none;
+          padding: 5px 0;
+        }
+          
+            @media screen and (max-width: 767px)
+            {
+            
+                iFrame {
+                      height:  90vh !important;
+                      width: 100%  !important;
+                      border: 0px;
+                }
+          }
+          
+        </style>
+        
+        
+        <style>html, body, #jaas-container { height: 100%; }</style>
+  		 <script type="text/javascript">
+          window.onload = () => {
+            const domain = 'meet.jit.si';
+            const options = {
+                roomName: "<%= nameMeeting  %>",
+
+                devices: {
+                    audioInput: '<deviceLabel>',
+                    audioOutput: '<deviceLabel>',
+                    videoInput: '<deviceLabel>'
+                },
+                 width: 700,
+                height: 700,
+                userInfo: {
+                  email: 'email@jitsiexamplemail.com',
+                  displayName: 'MyRoom'
+              },
+                parentNode: document.querySelector('#meet')
+            };
+            const api = new JitsiMeetExternalAPI(domain, options);
+            api.executeCommands({
+              displayName: [ 'nickname' ],
+              toggleAudio: []
+          });
+          }
+        </script>
+      </head>
+      <body>
+         <div class="meetingheader">
+          <div class="logo">
+            <img src="/Logo.png">
+          </div>
+        </div>
+        <div id="meet">
+         
+             
+        </div>
+        <div class="meetingfooter">
+          <div class="footer-logo">
+            <img src="/adm/uploads/footer_logo_white.png">
+          </div>
+          <ul class="links">
+            <li><a href="/">Explore</a></li> |
+            <li><a href="/join">Create Page</a></li>
+          </ul>
+        </div>
+      </body>
+    </html>

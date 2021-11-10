@@ -1,0 +1,470 @@
+<%- include('../admin/header'); %>
+
+  <style>
+  .tabs {
+       
+        overflow-x: inherit;
+        overflow-y: initial;
+    }
+    .row .col.s3 
+    {
+      width: 24%;
+      margin-left: auto;
+      left: auto;
+      right: auto;
+      margin: 5px;
+      line-height: 22px;
+    	height: 60px;
+	}
+  
+    .tabs .tab a { 
+        text-transform: capitalize;
+      	    padding: 12px 24px;
+    }
+    .tabs .tab a:hover {
+      text-decoration:none;
+    }
+    .tabs .tab a span{
+      font-size:18px;
+    } 
+    .indicator{
+      display:none
+    }
+    .marginDropdown{
+          margin-bottom: 10px;
+   			 margin-left: 5px;
+    }
+    
+    
+    
+
+  </style>
+<div class="header"> 
+    <h1 class="page-header">
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+    <li><a href="#">Dashboard</a></li>
+    <li class="active">Key Data</li>
+</ol> 
+                
+</div>
+
+  <% 
+  var noOfRequest=0;
+  var totalSales=0;
+  var noOfCreator=0;
+  var noOfReferral=0;
+  var expyCommission=0,requestCompleted=0,totalPageViews=0,totalUniquePageVisitor=0,signup_via_referral=0,payout_for_Creator=0,averageCTR_view_click=0;
+  
+
+
+sales.forEach(function(item) {        
+  totalSales=item.totalSales;
+  noOfRequest=item.noOfSales; 
+  expyCommission=totalSales *.10;
+});
+  
+creators.forEach(function(item) { 
+    noOfCreator=item.noOfCreator;
+});
+
+
+referralRequest.forEach(function(item) {  
+    noOfReferral=item.noOfReferral;
+});
+
+
+   
+  completedRequest.forEach(function(item) 
+  {  
+    requestCompleted=item.completedRequest;
+
+  });
+
+ uniqueViews.forEach(function(item) 
+  {  
+    totalUniquePageVisitor = item.uniqueViews;
+
+  });
+
+  totalViews.forEach(function(item) 
+  {  
+    totalPageViews = item.totalViews;
+
+  });
+     
+  total_signup_via_referral.forEach(function(item) 
+  {  
+    signup_via_referral = item.total_signup_via_referral;
+
+  });
+     
+  payoutCreator.forEach(function(item) 
+  {  
+    payout_for_Creator = item.payoutCreator;
+
+  });
+     
+  averageCTR.forEach(function(item) 
+  {  
+    averageCTR_view_click = item.averageCTR;
+
+  });
+     
+
+     
+     %>
+<div id="page-inner">
+	<div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                            <div class="card-action">
+                                 Key Data
+                            </div>
+                            
+                         
+                            <div class="card-content">
+                             
+                              	 <div class="row">
+                                    <div class="col-md-5">
+                                        <select id="type" class="form-control marginDropdown">
+                                          <option value="0">--Select Type--</option>
+                                          <option value="1">Daily</option>
+                                            <option value="7">Weekly</option>
+                                            <option value="30">Monthly</option>
+                                            <option value="365">Total</option>
+                                        </select>
+                                    </div>
+                                   
+                                    <div class="col-md-12" >
+                                          <ul class="tabs">
+
+                                              <li class="tab col s3">
+                                                <a href="#signup_ref" class="" id="btn_signup_ref"  data-id="signup_ref"  onclick="getKeyData(this)">Sign ups via referral 												 <br/><span id="txt_signup_ref"  ><%=signup_via_referral %></span>
+                                                </a>
+                                            </li>
+                                              <li class="tab col s3">
+                                                <a class="" href="#signup" data-id="signup" onclick="getKeyData(this)">Creator sign ups
+                                                 <br/><span id="txt_signup" ><%=noOfCreator %></span>
+                                                </a>
+                                            </li> 
+                                              <li class="tab col s3"><a href="#sales" class="" data-id="sales" onclick="getKeyData(this)">Sales  
+                                                 <br/><span id="txt_sales"><%=totalSales %></span>
+                                               </a>
+                                            </li>
+                                              <li class="tab col s3"><a class="" href="#payout" data-id="payout"   onclick="getKeyData(this)">Payout (to creators) 
+                                                <br/><span id="txt_payout"><%=payout_for_Creator %></span>
+                                                </a></li>
+                                              <li class="tab col s3"><a href="#exp_com" class="" data-id="exp_com"  onclick="getKeyData(this)">Expy commission
+                                                
+                                                  <br/><span id="txt_exp_comt"><%=expyCommission.toFixed(2) %></span>
+                                                </a></li>
+                                              <li class="tab col s3"><a class="" href="#com_req_pur" data-id="com_req_pur"  onclick="getKeyData(this)">Completed requests/purchases
+                                                 <br/><span id="txt_com_req_pur"><%=requestCompleted %></span>
+                                                </a></li>
+                                              <li class="tab col s3"><a href="#page_views" class="" data-id="page_views"  onclick="getKeyData(this)">Total page views
+                                                  <br/><span id="txt_page_views"><%=totalPageViews %></span>
+                                                </a></li>
+                                            <li class="tab col s3"><a class="" href="#u_visitor" data-id="u_visitor" onclick="getKeyData(this)">Unique page visitors  
+                                                 <br/><span id="txt_u_visitor"><%=totalUniquePageVisitor %></span>
+                                                
+                                                </a></li>
+                                              <li class="tab col s3"><a class="" href="#avg_ctr" data-id="avg_ctr"  onclick="getKeyData(this)">Average CTR (%)
+                                                   <br/><span id="txt_avg_ctr"><%=averageCTR_view_click %></span>
+                                                
+                                                </a></li>
+                                          </ul>
+                                      </div>
+                                  </div>
+                              <div class="row">
+                                     <div class="col-md-12">
+                                        <div id="signup_ref" class="col s12" style="display: none;">    
+                                           <div class="table-responsive" style="overflow: auto;max-height: 500px;">
+                                                <table class="table table-striped table-bordered table-hover" id="tbl_signup_ref">
+
+                                                </table>
+                                             </div>
+                                        </div>
+                                        <div id="signup" class="col s12 table-responsive" style="display: none;">     
+                                          <table class="table table-striped table-bordered table-hover" id="tbl_signup">
+                                                  
+                                          </table>
+                                        </div>
+                                        <div id="sales" class="col s12 table-responsive" style="display: none;">      
+                                          <table class="table table-striped table-bordered table-hover" id="tbl_sales">
+                                                  
+                                          </table>                                
+                                        </div>
+                                        <div id="payout" class="col s12 table-responsive" style="display: none;"> 
+                                          <table class="table table-striped table-bordered table-hover" id="tbl_payout">
+                                                  
+                                          </table>                                             
+                                        </div>
+                                        <div id="exp_com" class="col s12 table-responsive" style="display: none;">   
+                                          <table class="table table-striped table-bordered table-hover" id="tbl_exp_com">
+                                                  
+                                          </table>                                
+                                        </div>
+                                        <div id="com_req_pur" class="col s12 table-responsive" style="display: none;"> 
+                                          <table class="table table-striped table-bordered table-hover" id="tbl_com_req_pur">
+                                                  
+                                          </table>                                
+                                        </div>
+                                        <div id="page_views" class="col s12 table-responsive" style="display: none;">   
+                                          <table class="table table-striped table-bordered table-hover" id="tbl_com_page_views">
+                                                  
+                                          </table>                                       
+                                        </div>
+                                        <div id="u_visitor" class="col s12 table-responsive" style="display: none;"> 
+                                          <table class="table table-striped table-bordered table-hover" id="tbl_u_visitor">
+                                                  
+                                          </table>                                                                                 
+                                        </div>
+
+                                        <div id="avg_ctr" class="col s12 table-responsive" style="display: none;">  
+                                          <table class="table table-striped table-bordered table-hover" id="tbl_avg_ctr">
+                                                  
+                                          </table>                                                                                
+                                        </div>   
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+
+
+                <div class="alert alert-success alertcustom" id="alertcustom" style="display:none;z-index: 99999;">
+                   
+                </div>
+           
+
+                <div id="deleteModal" class="modal fade" role="dialog" data-backdrop='static' data-keyboard='false'>
+                    <div class="modal-dialog modal-sm">  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                       <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                          <h4 class="modal-title">Warning</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Do you want to delete ?</p>
+                        </div>
+                        <div class="modal-footer">
+                          <input type="hidden" id="JM_ID">                       
+                         
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left: 5px;">Close</button>
+                           <button type="button" class="btn btn-primary delete" id="btn_ok" style="color: white;"> Okay</button>
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+
+                      <!--alert for all-->
+                              
+                 <div id="alertModal" class="modal fade" role="dialog" data-backdrop='static' data-keyboard='false'>
+                    <div class="modal-dialog modal-sm">  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                          <h4 class="modal-title">Warning</h4>
+                        </div>
+                        <div class="modal-body">
+                          <p>Do you want to <span  id="alert_title"></span></p>
+                        </div>
+                        <div class="modal-footer">
+                          <input type="hidden" class="JM_ID" >                       
+                         
+                           <button type="button" class="btn btn-danger btn_cancel_alert" id="btn_cancel_alert"  data-dismiss="modal" style="margin-left: 5px;">Close</button>
+                           <button type="button" class="btn btn-primary btn_ok_alert" id="btn_ok_alert"  style="color: white;"> Okay</button>
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+                              
+                              
+                              
+
+
+                  <div id="paymentModal" class="modal fade" role="dialog" data-backdrop='static' data-keyboard='false' style="overflow-y: auto;">
+                    <div class="modal-dialog modal-lg">
+  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button>-->
+                          <h4 class="modal-title">Payment Details</h4>
+                        </div>
+                        <div class="modal-body">
+                            	<div class="col-md-3 col-sm-3">
+                          			<div class="card">                                
+                                      <div class="card-content">
+                                        <span class="card-title activator grey-text text-darken-4" id="totalEarning">
+                                          Total Earnings 
+                                       
+                                        </span>
+                                          <!--<p><a href="#">This is a link</a></p>-->
+                                      </div>
+                                      <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                                      </div>
+                                    </div>
+                                </div>
+                            	<div class="col-md-3 col-sm-3">
+                          			<div class="card">
+                                     
+                                      <div class="card-content">
+                                        <span class="card-title activator grey-text text-darken-4" id="totalPayout">
+                                          Total Payout                                       
+                                        </span>                                         
+                                      </div>
+                                      <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                                      </div>
+                                    </div>
+                                </div>
+                            	<div class="col-md-3 col-sm-3">
+                          			<div class="card">                                    
+                                      <div class="card-content">
+                                        <span class="card-title activator grey-text text-darken-4" id="totalWallet"">
+                                          Total Wallet
+                                          </span>
+                                      </div>
+                                      <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+                                        <p>Here is some more information about this product that is only revealed once clicked on.</p>
+                                      </div>
+                                    </div>
+                                </div>
+                        
+                        	  <div class="col-md-3 col-sm-3">
+                          			<div class="card">                                    
+                                      <div class="card-content">                                       
+                                          <a href="#" data-toggle="modal" data-target="#payoutModal" >
+                                            <span class="card-title activator grey-text text-darken-4">
+                                                      Send Payout
+                                             </span>
+                                          </a>
+                                      </div>
+                                     
+                                    </div>
+                                </div>
+                          
+                                <div class="col">
+                                   <ul class="tabs">
+                                     
+                                     <li class="tab col s3"><a href="#test1" class="">All Transactions</a></li>
+                                     <li class="tab col s3"><a class="active" href="#test2">All Payments</a></li> 
+                                     
+                                   <div class="indicator" style="right: 158.469px; left: 79.5312px;"></div></ul>
+                                 </div>
+                                 <div class="clearBoth"><br></div>
+                          
+                                 <div id="test1" class="col s12" style="display: none;">
+                    						   <div class="table-responsive" style="overflow: auto;max-height: 500px;">
+                                                 <h1>
+                                                   All transaction
+                                                 </h1>
+                                                    <table class="table table-striped table-bordered table-hover" id="tbl_all_tran">
+                                                          <thead>
+                                                            <tr> 
+                                                                  <th>Date</th>    
+                                                                  <th>Name</th>  
+                                                                  <th>Email</th>  
+                                                                  <th>Service Title</th>  
+                                                                  <th>Service Amount</th>  
+                                                                  <th>Status</th> 
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody id="tbl_all_tran_tbody">
+                                                            
+                                                          </tbody>
+                                                   </table>
+                                                </div>
+                                                          
+                        		  </div>
+                                 <div id="test2" class="col s12" style="display: block;">
+                        					   <div class="table-responsive" style="overflow: auto;max-height: 500px;">
+                                                  <h1>
+                                                   All payouts
+                                                 </h1>
+                                                    <table class="table table-striped table-bordered table-hover" id="tbl_all_payment">
+                                                          <thead>
+                                                            <tr> 
+                                                                  <th>Date</th>    
+                                                                  <th>Amount</th>  
+                                                                  <th>Payout Id</th>                                                                  
+                                                                 
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody id="tbl_all_payment_tbody">
+                                                            
+                                                          </tbody>
+                                                   </table>
+                                                </div>	
+                          	
+                         		 </div>
+                          
+                                <div class="clearBoth"><br></div>
+                               
+                        </div>
+                        <div class="modal-footer">
+                          <input type="hidden" id="JM_ID">                       
+                         
+                           <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-left: 5px;">Close</button>
+                         
+                        </div>
+                      </div>
+  
+                    </div>
+                  </div>
+
+                              
+                              
+                              
+                <div id="chartModal" class="modal fade" role="dialog" data-backdrop='static' data-keyboard='false'>
+                    <div class="modal-dialog modal-lg">
+  
+                      <!-- Modal content-->
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <h4 class="modal-title">Chart</h4>
+                        </div>
+                        <div class="modal-body">
+
+								          
+                                    <div class="card">
+                                        <div class="card-action" id="title_days">
+                                           
+                                        </div>
+                                        <div class="card-content" id="graph-container">                                          
+                                            <canvas id="myChart" width="100%"></canvas>
+                                        </div>
+                                    </div>            
+                               
+                          
+                        </div>
+                        <div class="modal-footer">
+                          
+                        </div>
+                        <p id="msg_payout">                          
+                        </p>
+                      </div>
+  
+                    </div>
+                  </div>
+
+
+<%- include('../admin/footer'); %>
+
+
+ 

@@ -1,0 +1,78 @@
+<%- include('../admin/header'); %>
+
+<div class="header"> 
+    <h1 class="page-header">
+        Dashboard
+    </h1>
+    <ol class="breadcrumb">
+    <li><a href="#">Dashboard</a></li>
+    <li class="active">Change Profile Url Requests</li>
+</ol> 
+                
+</div>
+
+<div id="page-inner">
+	<div class="row">
+                    <div class="col-md-12">
+                        <!-- Advanced Tables -->
+                        <div class="card">
+                            <div class="card-action">
+                               Change Profile Url Requests
+                            </div>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover" id="tbl_news_letter">
+                                        <thead>
+                                            <tr>                                              
+                                               
+                                                <th>Date</th>    
+                                                 <th>Email</th>  
+                                                <th>Current Username</th>  
+                                                <th>Requested Username</th>  
+                                                <th>Action</th>  
+                                              
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% 
+                                               data.forEach(function(item) {  
+                                              
+                                               %>
+                                               	 <tr class="odd gradeX">                                               	
+                                                    <td><%= moment(item.Create_Date).format( 'MMM-DD-YYYY') %>  
+                                                    <td><%= item.JM_Email %></td>
+                                                    <td><%= item.Old_Url %></td>   
+                                                    <td><%= item.New_Url %></td>    
+                                                    <th>
+                                                        <button class="changeUrl" data-value="<%= item.JM_ID %>"
+                                                             data-old="<%= item.Old_Url %>" data-new="<%= item.New_Url %>">
+                                                            Change
+                                                          </button>
+                                                    </th>  
+                                                 </tr>
+                                              <% }); %>
+                                        </tbody>
+                                    </table>
+                                             
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <!--End Advanced Tables -->
+                    </div>
+                </div>
+
+
+                <div class="alert alert-success alertcustom" id="alertcustom" style="display:none">
+                   
+                </div>
+           
+
+
+
+<%- include('../admin/footer'); %>
+<script>
+    $(document).ready(function () {
+        $('#tbl_news_letter').dataTable();
+    });
+</script>
